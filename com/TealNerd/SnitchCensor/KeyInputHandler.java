@@ -13,7 +13,7 @@ Minecraft mc = Minecraft.getMinecraft();
         	mc.thePlayer.addChatMessage(new ChatComponentText("SnitchCensor Enabled"));
         	SnitchCensor.isEnabled = true;
         	}
-        if(SnitchCensor.toggle.isPressed() && SnitchCensor.isEnabled){
+        else if(SnitchCensor.toggle.isPressed() && SnitchCensor.isEnabled){
         	mc.thePlayer.addChatMessage(new ChatComponentText("SnitchCensor Disabled"));
         	SnitchCensor.isEnabled = false;
         	}
