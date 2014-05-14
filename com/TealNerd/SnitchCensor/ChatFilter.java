@@ -11,7 +11,9 @@ import java.util.regex.Pattern;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.GameSettings;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
 public class ChatFilter {
@@ -27,7 +29,8 @@ public class ChatFilter {
 	}
 	@SubscribeEvent
 	public void onChat(ClientChatReceivedEvent e){
-		if(e.message!=null&&e.message.getFormattedText().contains("entered snitch at")){
+		if(SnitchCensor.isEnabled == true){
+			if(e.message!=null&&e.message.getFormattedText().contains("entered snitch at") || e.message!=null&&e.message.getFormattedText().contains("logged in to snitch") || e.message!=null&&e.message.getFormattedText().contains("logged out in snitch")){
 			msg = e.message.getFormattedText();
 			int l = msg.length();
 			e.setCanceled(true);
@@ -41,5 +44,8 @@ public class ChatFilter {
 			
 		}
 
+		}else{
+			return;
 		}
+	}
 }
