@@ -15,7 +15,7 @@ public class ChatFilter {
 	Minecraft mc = Minecraft.getMinecraft();
 
 	public String msg;
-	public int x;
+	public int x = 0;
 
 	public static void init()
 	{
@@ -24,7 +24,7 @@ public class ChatFilter {
 	@SubscribeEvent
 	public void onChat(ClientChatReceivedEvent e){
 		if(e.message!=null&&e.message.getFormattedText().contains("entered snitch at")){
-			msg = e.message.toString();
+			msg = e.message.getFormattedText();
 			int l = msg.length();
 			e.setCanceled(true);
 			for(int i=0; i<l; i++){
