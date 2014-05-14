@@ -11,12 +11,12 @@ import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraft.client.Minecraft;
 
 public class ChatFilter {
-	
+
 	Minecraft mc = Minecraft.getMinecraft();
-	
+
 	public String msg;
 	public int x;
-	
+
 	public static void init()
 	{
 
@@ -24,15 +24,17 @@ public class ChatFilter {
 	@SubscribeEvent
 	public void onChat(ClientChatReceivedEvent e){
 		if(e.message!=null&&e.message.getFormattedText().contains("entered snitch at")){
-			msg = e.message.getFormattedText();
+			msg = e.message.toString();
+			int l = msg.length();
 			e.setCanceled(true);
-			 for(int i=0; i<40; i++){
+			for(int i=0; i<l; i++){
 				if(msg.substring(i - 1, i).equals("[")){
 					x = i;
 					break;
 				}
 			}
+			mc.thePlayer.sendChatMessage(msg.substring(0, x) + "[**** ** ****]");
 		}
-		mc.thePlayer.sendChatMessage(msg.substring(0, x) + "[**** ** ****]");
+		
 		}
 }
