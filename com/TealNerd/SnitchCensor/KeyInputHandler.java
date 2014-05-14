@@ -9,14 +9,15 @@ public class KeyInputHandler {
 Minecraft mc = Minecraft.getMinecraft();
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        if(SnitchCensor.toggle.isPressed() && !SnitchCensor.isEnabled){
+        if(SnitchCensor.toggle.isPressed()){
+        	if(!SnitchCensor.isEnabled){
         	mc.thePlayer.addChatMessage(new ChatComponentText("SnitchCensor Enabled"));
         	SnitchCensor.isEnabled = true;
-        	}
-        else if(SnitchCensor.toggle.isPressed() && SnitchCensor.isEnabled){
+        	}else if(SnitchCensor.isEnabled){
         	mc.thePlayer.addChatMessage(new ChatComponentText("SnitchCensor Disabled"));
         	SnitchCensor.isEnabled = false;
         	}
+        }
     }
 
 }
