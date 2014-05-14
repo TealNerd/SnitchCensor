@@ -28,7 +28,7 @@ public class ChatFilter {
 			int l = msg.length();
 			e.setCanceled(true);
 			for(int i=0; i<l; i++){
-				if(msg.substring(i - 1, i).equals("[")){
+				if(msg.substring(i, i+1).equals("[")){
 					x = i;
 					break;
 				}
