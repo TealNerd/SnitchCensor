@@ -1,7 +1,9 @@
 package com.TealNerd.SnitchCensor;
 
 import java.util.ConcurrentModificationException;
+
 import com.TealNerd.SnitchCensor.*;
+
 import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -9,6 +11,8 @@ import java.util.regex.Pattern;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraft.client.Minecraft;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 
 public class ChatFilter {
 
@@ -33,8 +37,9 @@ public class ChatFilter {
 					break;
 				}
 			}
-			mc.thePlayer.sendChatMessage(msg.substring(0, x) + "[**** ** ****]");
+			mc.thePlayer.addChatMessage(new ChatComponentText(msg.substring(0, x) + "[**** ** ****]"));
+			
 		}
-		
+
 		}
 }
