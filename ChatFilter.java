@@ -10,7 +10,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraft.client.Minecraft;
 
-public class ChatParse {
+public class ChatFilter {
 	
 	Minecraft mc = Minecraft.getMinecraft();
 	
