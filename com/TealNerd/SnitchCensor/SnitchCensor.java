@@ -31,15 +31,15 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 
-@Mod(modid="SnitchCensor", name="Snitch Coordinate Censor", version="1.1.0")
+@Mod(modid="SnitchCensor", name="Snitch Coordinate Censor", version="1.2.0")
 
 public class SnitchCensor {
-	
+
 	Minecraft mc = Minecraft.getMinecraft();
 	static boolean isEnabled = false;
 	public static KeyBinding toggle;
-	
-	
+
+
 
 
     // The instance of your mod that Forge uses.

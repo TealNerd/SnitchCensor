@@ -17,35 +17,29 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 
 public class ChatFilter {
-
-	Minecraft mc = Minecraft.getMinecraft();
-
-	public String msg;
-	public int x = 0;
-
-	public static void init()
-	{
-
-	}
-	@SubscribeEvent
-	public void onChat(ClientChatReceivedEvent e){
-		if(SnitchCensor.isEnabled == true){
-			if(e.message!=null&&e.message.getFormattedText().contains("entered snitch at") || e.message!=null&&e.message.getFormattedText().contains("logged in to snitch") || e.message!=null&&e.message.getFormattedText().contains("logged out in snitch")){
-			msg = e.message.getFormattedText();
-			int l = msg.length();
-			e.setCanceled(true);
-			for(int i=0; i<l; i++){
-				if(msg.substring(i, i+1).equals("[")){
-					x = i;
-					break;
-				}
-			}
-			mc.thePlayer.addChatMessage(new ChatComponentText(msg.substring(0, x) + "[**** ** ****]"));
-			
-		}
-
-		}else{
-			return;
-		}
-	}
+    
+    Minecraft mc = Minecraft.getMinecraft();
+ 
+    public String msg;
+    public String finalstring;
+    public int x = 0;
+    private Pattern snitch = Pattern.compile("\\[[-0-9]* [0-9]* [-0-9]*\\]");
+   
+   
+    public static void init()
+    {
+ 
+    }
+    @SubscribeEvent
+    public void onChat(ClientChatReceivedEvent e){
+            if(SnitchCensor.isEnabled == true){
+                    msg = e.message.getFormattedText();
+                  Matcher snitchMatcher = snitch.matcher(msg);
+                    if (snitchMatcher.find()){
+                    e.setCanceled(true);
+                    finalstring = snitchMatcher.replaceAll("[**** ** ****]");
+                    mc.thePlayer.addChatMessage(new ChatComponentText(finalstring));
+                    }
+            }
+    }
 }
