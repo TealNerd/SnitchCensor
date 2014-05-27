@@ -76,7 +76,7 @@ public class SnitchCensor {
             proxy.registerListeners();
             toggle = new KeyBinding("Toggle Censor", Keyboard.KEY_T, "Snitch Censor");
             ClientRegistry.registerKeyBinding(toggle);
-            customkey = new KeyBinding("Toggle Custom Highlighting", Keyboard.KEY_L, "Snitch Censor");
+            customkey = new KeyBinding("Toggle Enemy Highlighting", Keyboard.KEY_L, "Snitch Censor");
             ClientRegistry.registerKeyBinding(customkey);
     }
     
