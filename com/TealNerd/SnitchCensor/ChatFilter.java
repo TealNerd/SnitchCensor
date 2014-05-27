@@ -31,6 +31,8 @@ public class ChatFilter {
     private Pattern user = Pattern.compile("([a-zA-Z0-9]+?) entered snitch at");
     public String username;
     protected boolean isEnemy = false;
+    public Matcher snitchMatcher;
+    public Matcher usernameMatcher;
 
     {
  
@@ -38,12 +40,11 @@ public class ChatFilter {
       
     @SubscribeEvent
     public void onChat(ClientChatReceivedEvent e) throws FileNotFoundException{
-    	
+    	msg = e.message.getUnformattedText();
+    	Matcher snitchMatcher = snitch.matcher(msg);
+    	Matcher usernameMatcher = user.matcher(msg);
     	if(SnitchCensor.custom){
-    		
-    		msg = e.message.getUnformattedText();
-    		Matcher snitchMatcher = snitch.matcher(msg);
-        	Matcher usernameMatcher = user.matcher(msg);
+    		if(snitchMatcher.find()){
         	if(usernameMatcher.find()){
         		username = usernameMatcher.group(1);
         	}
@@ -61,41 +62,47 @@ public class ChatFilter {
         	}
         	
         	input.close();
-        	
-        	if(snitchMatcher.find() && isEnemy){
-        	
+        	if(isEnemy){
         		if(SnitchCensor.isEnabled){
         			e.setCanceled(true);
         			finalstring = snitchMatcher.replaceAll("[**** ** ****]");
         			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + finalstring));
         		}else{
-        		e.setCanceled(true);
-        		mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + msg));}
-        	}else return;
-        
+        			e.setCanceled(true);
+        			finalstring = msg;
+        			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + finalstring));
+        		}
+        	}else{
+        		if(SnitchCensor.isEnabled){
+        			e.setCanceled(true);
+        			finalstring = snitchMatcher.replaceAll("[**** ** ****]");
+        			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
+        		}else{
+        			e.setCanceled(true);
+        			finalstring = msg;
+        			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
+        		}
+        	}
+        	
+    		}
         }
     	
     	
     	
-    	else if(SnitchCensor.isEnabled){
-	 		msg = e.message.getUnformattedText();
-	 		Matcher snitchMatcher = snitch.matcher(msg);
-            if (snitchMatcher.find()){
+    	else if(snitchMatcher.find()){
+            if (SnitchCensor.isEnabled){
             e.setCanceled(true);
             finalstring = snitchMatcher.replaceAll("[**** ** ****]");
             mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
-            }
-            if(e.message.getFormattedText().contains("[Realistic Biomes]")){
+            }else{
             	e.setCanceled(true);
+    			finalstring = msg;
+    			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
             }
-    }
+        }
+    
     	
     	
          
          }
     }
-         
-
-            
-	
-    
