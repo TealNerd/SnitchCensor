@@ -37,8 +37,12 @@ public class SnitchCensor {
 
 	Minecraft mc = Minecraft.getMinecraft();
 	static boolean isEnabled = false;
+	static boolean custom = true;
+	static boolean bounty = false;
 	public static KeyBinding toggle;
-
+	public static KeyBinding customkey;
+	private String dir = mc.mcDataDir + "/mods/RadarBro/";
+	private File enemies = new File(dir, "EnemyList.txt");
 
 
 
@@ -50,10 +54,19 @@ public class SnitchCensor {
     public static CommonProxy proxy;
     
     @EventHandler
-    public void preInit(FMLPreInitializationEvent event) {
+    public void preInit(FMLPreInitializationEvent event)  {
     	SnitchCensor.instance = this;
     	MinecraftForge.EVENT_BUS.register(new ChatFilter());
     	FMLCommonHandler.instance().bus().register(new KeyInputHandler());
+    	
+    	try {
+    		
+    		   if ( enemies.createNewFile() ) {
+    		      System.out.println("Success!");
+    		   } else {
+    		      System.out.println("Failure!");
+    		   }
+    		} catch ( IOException ioe ) { ioe.printStackTrace(); }
     }
     
     
@@ -63,9 +76,9 @@ public class SnitchCensor {
             proxy.registerListeners();
             toggle = new KeyBinding("Toggle Censor", Keyboard.KEY_T, "Snitch Censor");
             ClientRegistry.registerKeyBinding(toggle);
+            customkey = new KeyBinding("Toggle Custom Highlighting", Keyboard.KEY_L, "Snitch Censor");
+            ClientRegistry.registerKeyBinding(customkey);
     }
-    
-    
     
     
     @EventHandler

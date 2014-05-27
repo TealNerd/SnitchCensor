@@ -2,6 +2,7 @@ package com.TealNerd.SnitchCensor;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.EnumChatFormatting;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent;
 
@@ -11,13 +12,23 @@ Minecraft mc = Minecraft.getMinecraft();
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if(SnitchCensor.toggle.isPressed()){
         	if(!SnitchCensor.isEnabled){
-        	mc.thePlayer.addChatMessage(new ChatComponentText("SnitchCensor Enabled"));
+        	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "SnitchCensor Enabled"));
         	SnitchCensor.isEnabled = true;
         	}else if(SnitchCensor.isEnabled){
-        	mc.thePlayer.addChatMessage(new ChatComponentText("SnitchCensor Disabled"));
+        	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "SnitchCensor Disabled"));
         	SnitchCensor.isEnabled = false;
         	}
         }
-    }
+       
+        else if(SnitchCensor.customkey.isPressed()){
+                	if(!SnitchCensor.custom){
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Custom Highlighting Enabled"));
+                	SnitchCensor.custom = true;
+                	}else if(SnitchCensor.custom){
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Custom Highlighting Disabled"));
+                	SnitchCensor.custom = false;
+                	}
+        }
 
+    }
 }
