@@ -22,10 +22,10 @@ Minecraft mc = Minecraft.getMinecraft();
        
         else if(SnitchCensor.customkey.isPressed()){
                 	if(!SnitchCensor.custom){
-                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Custom Highlighting Enabled"));
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Enemy Highlighting Enabled"));
                 	SnitchCensor.custom = true;
                 	}else if(SnitchCensor.custom){
-                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Custom Highlighting Disabled"));
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Enemy Highlighting Disabled"));
                 	SnitchCensor.custom = false;
                 	}
         }
