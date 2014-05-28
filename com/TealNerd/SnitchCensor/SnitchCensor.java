@@ -59,14 +59,14 @@ public class SnitchCensor {
     	MinecraftForge.EVENT_BUS.register(new ChatFilter());
     	FMLCommonHandler.instance().bus().register(new KeyInputHandler());
     	
-    	try {
-    		
-    		   if ( enemies.createNewFile() ) {
-    		      System.out.println("Success!");
-    		   } else {
-    		      System.out.println("Failure!");
-    		   }
-    		} catch ( IOException ioe ) { ioe.printStackTrace(); }
+    	if(!enemies.exists()){
+    		new File(dir).mkdirs();
+    		try {
+				enemies.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
     }
     
     
