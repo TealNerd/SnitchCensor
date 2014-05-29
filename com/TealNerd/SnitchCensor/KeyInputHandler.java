@@ -20,15 +20,16 @@ Minecraft mc = Minecraft.getMinecraft();
         	}
         }
        
-        else if(SnitchCensor.customkey.isPressed()){
+        else if(SnitchCensor.highlightkey.isPressed()){
                 	if(!SnitchCensor.custom){
-                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Enemy Highlighting Enabled"));
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Highlighting Enabled"));
                 	SnitchCensor.custom = true;
                 	}else if(SnitchCensor.custom){
-                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Enemy Highlighting Disabled"));
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Highlighting Disabled"));
                 	SnitchCensor.custom = false;
                 	}
         }
-
-    }
+        
 }
+    }
+
