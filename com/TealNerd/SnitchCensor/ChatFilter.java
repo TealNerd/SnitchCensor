@@ -33,6 +33,8 @@ public class ChatFilter {
     protected boolean isEnemy = false;
     public Matcher snitchMatcher;
     public Matcher usernameMatcher;
+    protected boolean hasBounty = false;
+    private Pattern name = Pattern.compile("\"name\":\"([A-Za-z0-9]+?)\"");
 
     {
  
@@ -43,6 +45,7 @@ public class ChatFilter {
     	msg = e.message.getUnformattedText();
     	Matcher snitchMatcher = snitch.matcher(msg);
     	Matcher usernameMatcher = user.matcher(msg);
+    	
     	if(SnitchCensor.custom){
     		if(snitchMatcher.find()){
         	if(usernameMatcher.find()){
@@ -62,6 +65,20 @@ public class ChatFilter {
         	}
         	
         	input.close();
+        	
+        	File perplist = new File(mc.mcDataDir + "/mods/SnitchCensor/perps.txt");
+        	Scanner in = new Scanner(perplist);
+        	while(in.hasNext()){
+        		String nameString = in.next(name);
+        		Matcher nameMatcher = name.matcher(nameString);
+        		String finalname = nameMatcher.group(1);
+        		
+        		if(finalname.equals(username)){
+        			hasBounty = true;
+        		}else{hasBounty = false;}
+        	}
+        	in.close();
+        	
         	if(isEnemy){
         		if(SnitchCensor.isEnabled){
         			e.setCanceled(true);
@@ -73,14 +90,24 @@ public class ChatFilter {
         			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.GOLD + finalstring));
         		}
         	}else{
-        		if(SnitchCensor.isEnabled){
-        			e.setCanceled(true);
-        			finalstring = snitchMatcher.replaceAll("[**** ** ****]");
-        			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
+        		if(hasBounty){
+        			if(SnitchCensor.isEnabled){
+        				e.setCanceled(true);
+        				finalstring = snitchMatcher.replaceAll("[**** ** ****]");
+        				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + finalstring));
+        			}else{
+        				e.setCanceled(true);
+        				finalstring = msg;
+        				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.RED + finalstring));
+        			}
         		}else{
-        			e.setCanceled(true);
-        			finalstring = msg;
-        			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
+        			if(SnitchCensor.isEnabled){
+        				e.setCanceled(true);
+        				finalstring = snitchMatcher.replaceAll("[**** ** ****]");
+        				mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + finalstring));
+        			}else{
+        				return;
+        			}
         		}
         	}
         	
@@ -93,11 +120,9 @@ public class ChatFilter {
             if (SnitchCensor.isEnabled){
             e.setCanceled(true);
             finalstring = snitchMatcher.replaceAll("[**** ** ****]");
-            mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
+            mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.AQUA + finalstring));
             }else{
-            	e.setCanceled(true);
-    			finalstring = msg;
-    			mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + finalstring));
+            	return;
             }
         }
     
