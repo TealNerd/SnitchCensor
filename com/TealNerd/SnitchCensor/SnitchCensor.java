@@ -3,12 +3,14 @@ package com.TealNerd.SnitchCensor;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,6 +50,10 @@ public class SnitchCensor {
 	public File bounties = new File(modDir, "perps.txt");
     private Pattern snitch = Pattern.compile("\\[[-0-9]* [0-9]* [-0-9]*\\]");
     private Pattern user = Pattern.compile("([a-zA-Z0-9]+?) entered snitch at");
+    String perps;
+    static boolean hasBounty;
+    private Pattern name = Pattern.compile("\"name\":\"([A-Za-z0-9]+?)\"");
+    String username;
 
 
 
@@ -103,7 +109,8 @@ public class SnitchCensor {
     	Matcher usernameMatcher = user.matcher(msg);
 
     		if(snitchMatcher.find()){
-
+    			
+    			//Get perps in file
     			URL url;
     			InputStream is = null;
     			BufferedReader br;
@@ -158,8 +165,31 @@ public class SnitchCensor {
     		        }
 
     		}
+    		
+    		
+    		if(usernameMatcher.find()){
+    			username = usernameMatcher.group(1);
     		}
+    		
+    		
     	
+    		//Check if user is in file
+    		 
+    		File perplist = new File(mc.mcDataDir + "/mods/SnitchCensor/perps.txt");
+        	Scanner in = new Scanner(perplist);
+        	while(in.hasNext()){
+        		String nameString = in.next(name);
+        		Matcher nameMatcher = name.matcher(nameString);
+        		String finalname = nameMatcher.group(1);
+        		
+        		if(finalname.equals(username)){
+        			hasBounty = true;
+        		}else{hasBounty = false;}
+        	}
+        	in.close();
+        	
+        	
+    		}
     		}
     
     @EventHandler
