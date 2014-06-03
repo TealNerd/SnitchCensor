@@ -12,23 +12,24 @@ Minecraft mc = Minecraft.getMinecraft();
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if(SnitchCensor.toggle.isPressed()){
         	if(!SnitchCensor.isEnabled){
-        	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "SnitchCensor Enabled"));
+        	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "[SnitchCensor] "+"Censoring Enabled"));
         	SnitchCensor.isEnabled = true;
         	}else if(SnitchCensor.isEnabled){
-        	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "SnitchCensor Disabled"));
+        	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "[SnitchCensor] "+"Censoring Disabled"));
         	SnitchCensor.isEnabled = false;
         	}
         }
        
-        else if(SnitchCensor.customkey.isPressed()){
+        else if(SnitchCensor.highlightkey.isPressed()){
                 	if(!SnitchCensor.custom){
-                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Enemy Highlighting Enabled"));
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "[SnitchCensor] "+"Highlighting Enabled"));
                 	SnitchCensor.custom = true;
                 	}else if(SnitchCensor.custom){
-                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "Enemy Highlighting Disabled"));
+                	mc.thePlayer.addChatMessage(new ChatComponentText(EnumChatFormatting.DARK_AQUA + "[SnitchCensor] "+"Highlighting Disabled"));
                 	SnitchCensor.custom = false;
                 	}
         }
-
-    }
+        
 }
+    }
+
